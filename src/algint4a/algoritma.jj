@@ -1,0 +1,193 @@
+
+options {
+    STATIC = false;
+    LOOKAHEAD=2;
+}
+
+PARSER_BEGIN(Algoritma)
+package AlgoritmaYorumlayici;
+import java.io.*;
+import java.util.*;
+public class Algoritma {
+  public static HashMap degiskenler;
+  public static HashMap satirlar;
+  public static PrintStream cikis;
+  public static void main(String args[]) throws ParseException {
+    InputStream fs=System.in;
+    cikis=System.out;
+    if(args.length>0)
+    {
+        try {
+            fs=new FileInputStream(args[0]);
+        }
+        catch(FileNotFoundException e){
+            cikis.println("Dosya bulunamadi.");
+            System.exit(-1);
+        }
+    }
+    degiskenler=new HashMap();
+    satirlar=new HashMap();
+    Algoritma alg = new Algoritma(fs);
+    alg.Giris();
+    if(Algoritma.AlgoritmaDuzgun())
+        Algoritma.Isle();
+  }
+public static void degerAta(String degiskenAdi,int deger)
+{
+    degiskenler.put(degiskenAdi, deger);
+}
+public static int degerAl(String degiskenAdi)
+{
+    Object a=degiskenler.get(degiskenAdi);
+    if(a==null)
+    {
+        cikis.println("Tanimlanmamis degisken: "+degiskenAdi);
+        System.exit(-1);
+    }
+    return Integer.valueOf(a.toString());
+}
+public static Satir getSatir(int satirNo) {
+    return (Satir)satirlar.get(satirNo);
+}
+
+public static void setSatir(int satirNo,Satir str) {
+    satirlar.put(satirNo, str);
+}
+public static int SatirNoAl(String s) {
+return Integer.parseInt(s.substring(0,s.length()-1));
+}
+public static void Isle()
+{
+    Satir s=getSatir(1);
+    int sonraki=s.Isle();
+    while(sonraki!=-1)
+    {
+        s=getSatir(sonraki);
+        sonraki=s.Isle();
+    }
+}
+
+public static boolean AlgoritmaDuzgun(){
+    boolean duzgun=true;
+    for(int i=0;i<satirlar.size();i++)
+    {
+        Satir s=(Satir) satirlar.get(i+1);
+        if(s==null){
+            cikis.println((i+1)+". satir bulunamadi.");
+            duzgun=false;
+        }
+    }
+    return duzgun;
+}
+}
+PARSER_END(Algoritma)
+TOKEN:{<EOL:"\r"|"\n"|"\r\n">}
+TOKEN:{<SATIRNO:<SAYI> ".">}
+TOKEN:{<SAYI:(["0"-"9"])+ >}
+TOKEN:{<YORUM:"/*" (~["*","/"])* "*/">}
+SKIP:{ " " | "\t" }
+TOKEN:{<YAZ:"YAZ"|"yaz"|"Yaz">}
+TOKEN:{<GIT:"Git"|"git"|"GIT"|"GÝT">}
+TOKEN:{<BASLA:"Basla"|"BASLA"|"basla"|"baþla"|"Baþla"|"BAÞLA">}
+TOKEN:{<DUR:"Dur"|"DUR"|"dur">}
+TOKEN:{<ISE:"ise"|"ISE"|"Ise"|"Ýse"|"ÝSE">}
+TOKEN:{<EGER:"eger"|"EGER"|"Eger"|"eðer"|"EÐER"|"Eðer">}
+TOKEN:{<GIRIS:"giris"|"GIRIS"|"Giris"|"giriþ"|"GÝRÝÞ"|"Giriþ">}
+TOKEN:{
+    <PARAC: "("> |
+    <PARKAPA: ")">
+}
+TOKEN:{<TURKCEKARAKTER:"Ö"|"ö"|"Ü"|"ü"|"Ð"|"ð"|"Ý"|"ý"|"Þ"|"þ"|"Ç"|"ç" >}
+TOKEN:{<DEGISKEN:(["a"-"z","A"-"Z"]|<TURKCEKARAKTER>)+ (["0"-"9"])* (["a"-"z","A"-"Z"]|<TURKCEKARAKTER>)* >}
+TOKEN:{<METIN: "'" (~["'"])* "'" >}
+TOKEN: { // Operatörler
+    <TOPLA: "+"> |
+    <CIKAR: "-"> |
+    <CARP: "*"> |
+    <BOL: "/"> |
+    <MOD: "%"> |
+    <ESIT: "=">
+}
+TOKEN: { // Karþýlaþtýrma Operatörleri
+    <KARSILASTIR: "<" | ">" | "<=" | ">=" | "<>" | "==" >
+}
+TOKEN:{<TIRNAK:"'"> | <IKINOKTA:":">}
+void Giris() :
+{
+    Satir s;
+    Token sno;
+}
+{
+    sno=<SATIRNO> <BASLA> <EOL> {Algoritma.setSatir(SatirNoAl(sno.image),new Basla(SatirNoAl(sno.image)));}
+    (s=Islem() <EOL> {Algoritma.setSatir(s.SatirNo,s);})*
+    sno=<SATIRNO> <DUR> (<EOL>)* {Algoritma.setSatir(SatirNoAl(sno.image),new Dur(SatirNoAl(sno.image)));}
+    <EOF>
+}
+
+
+Satir Islem():
+{
+    Token sno;
+    Ifade ifd;
+    Token t;
+    Ifade i1;
+    Ifade i2;
+    Token t1;
+}
+{
+    sno=<SATIRNO> <YAZ> ifd=Ifade() {return new Yazdir(ifd,SatirNoAl(sno.image));} |
+    sno=<SATIRNO> <GIT> t=<SAYI> {return new Git(SatirNoAl(sno.image),Integer.parseInt(t.image));} |
+    sno=<SATIRNO> t=<DEGISKEN> <ESIT> ifd=Ifade() {Algoritma.degerAta(t.image,0); return new Atama(ifd,SatirNoAl(sno.image),t.image);} |
+    sno=<SATIRNO> <GIRIS> <IKINOKTA> t=<DEGISKEN> {return new Giris(t.image,SatirNoAl(sno.image));} |
+    sno=<SATIRNO> <EGER> i1=Ifade() t=<KARSILASTIR> i2=Ifade() <ISE> 
+    (
+        <YAZ> ifd=Ifade() {return new Karsilastir(SatirNoAl(sno.image),i1,i2,t.image,new Yazdir(ifd,SatirNoAl(sno.image)));} |
+        <GIT> t1=<SAYI> {return new Karsilastir(SatirNoAl(sno.image),i1,i2,t.image,new Git(SatirNoAl(sno.image),Integer.parseInt(t1.image)));} |
+        t1=<DEGISKEN> <ESIT> ifd=Ifade() {Algoritma.degerAta(t.image,0);return new Karsilastir(SatirNoAl(sno.image),i1,i2,t.image,new Atama(ifd,SatirNoAl(sno.image),t1.image));}
+    )
+}
+
+
+Ifade Ifade():
+{
+    Ifade x;
+    Ifade y;
+}
+{
+    x=Term()
+    (
+        <TOPLA> y=Term() {x=new Toplam(x,y);}|
+        <CIKAR> y=Term() {x=new Fark(x,y);}
+    )*
+    {return x;}
+}
+
+Ifade Term():
+{
+    Ifade x;
+    Ifade y;
+}
+{
+    x=Primary()
+    (
+        <CARP> y=Primary() {x=new Carpma(x,y);}|
+        <BOL> y=Primary() {x=new Bolme(x,y);}|
+        < MOD > y=Primary(){x=new Mod(x,y);}
+    )*
+    {return x;}
+}
+
+Ifade Primary():
+{
+    Token t;
+    Ifade ifd;
+}
+{
+    t=<SAYI> {return new Num(Integer.parseInt(t.image));} |
+    t=<DEGISKEN> {return new Var(t.image);} |
+    <CIKAR> t=<SAYI> {return new Num(-1*Integer.parseInt(t.image));} |
+    t=<METIN> {return new Metin(t.image.substring(1,t.image.length()-1));}|
+    <PARAC> ifd=Ifade() <PARKAPA> {return ifd;}
+    //t=<METIN> (< TOPLA > i=Ifade())* {return new Metin(t.image.substring(1,t.image.length()-1)+i.toString());}
+    
+}
