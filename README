@@ -1,0 +1,16 @@
+Algorithm Interpreter For Android
+This project is a branch of the previous algorithm interpreter written with JavaCC and Java. Algorithms are written in Turkish language. Project is not at its final state. Use it with your own risk.
+Comments and feedbacks are appreciated.
+Sample algorithm that runs on interpreter which calculates the sum of squares of numbers between 1 and N.
+
+1. Basla
+2. karetoplam=0
+3. giris:N
+4. eger N==0 ise git 9
+5. karetoplam=karetoplam+N*N
+6. yaz N*N
+7. N=N-1
+8. git 4
+9. yaz 'Karelerin toplami:'
+10. yaz karetoplam
+11. Dur
