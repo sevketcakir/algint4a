@@ -3,15 +3,15 @@
 ## Kurulum
 Algoritma Yorumlayıcı uygulamasının çalışabilmesi için bilgisayarınızda [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html) kurulu olmalıdır.
 
-- ### Git Kullanarak
+### Git Kullanarak
 ```sh
 git clone https://github.com/sevketcakir/algint4a.git
 ```
-- ### Siteden İndirme
+### Siteden İndirme
 [Bağlantıya](https://github.com/sevketcakir/algint4a/archive/master.zip) tıklayarak sıkıştırılmış dosyayı indirebilirsiniz.
 ## Kullanım
 Algoritma Yorumlayıcı içinde bir adet Java uygulaması ve Java Applet'i barındırır. Algoritmalar farklı şekillerde girdi olarak verilebilir:
-- ### Komut satırı \(**stdin**\)
+### Komut satırı \(**stdin**\)
 **Linux**: Uygulama klasöründe iken standart girişten(klavyeden) algoritmanızı yazıp Ctrl+D tuşuna basarak çalıştırabilirsiniz.
 ```sh
 ./alg.sh
@@ -20,7 +20,7 @@ Algoritma Yorumlayıcı içinde bir adet Java uygulaması ve Java Applet'i barı
 ```
 alg.bat
 ```
-- ### Girdi dosyası
+## Girdi dosyası
 **Linux**:
 ```sh
 ./alg.sh < ornek1.alg
@@ -29,7 +29,7 @@ alg.bat
 ```
 alg.bat < ornek1.alg
 ```
-- ### Applet
+### Applet
 **Linux**:
 ```sh
 ./aap.sh
