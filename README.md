@@ -40,7 +40,7 @@ aap.bat
 ```
 ![Applet örneği](algint4a.png)
 
-##Örnek Algoritma
+## Örnek Algoritma
 ```
 1. Basla
 2. karetoplam=0
