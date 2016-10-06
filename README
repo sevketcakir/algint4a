@@ -1,8 +1,47 @@
-Algorithm Interpreter For Android
-This project is a branch of the previous algorithm interpreter written with JavaCC and Java. Algorithms are written in Turkish language. Project is not at its final state. Use it with your own risk.
-Comments and feedbacks are appreciated.
-Sample algorithm that runs on interpreter which calculates the sum of squares of numbers between 1 and N.
+# Algoritma Yorumlayıcı
+**!!! Uygulama kullanımından dolayı doğacak sorunlar sizin sorumluluğunuzdadır. !!!**
+## Kurulum
+Algoritma Yorumlayıcı uygulamasının çalışabilmesi için bilgisayarınızda [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html) kurulu olmalıdır.
 
+- ### Git Kullanarak
+```sh
+git clone https://github.com/sevketcakir/algint4a.git
+```
+- ### Siteden İndirme
+[Bağlantıya](https://github.com/sevketcakir/algint4a/archive/master.zip) tıklayarak sıkıştırılmış dosyayı indirebilirsiniz.
+## Kullanım
+Algoritma Yorumlayıcı içinde bir adet Java uygulaması ve Java Applet'i barındırır. Algoritmalar farklı şekillerde girdi olarak verilebilir:
+- ### Komut satırı \(**stdin**\)
+**Linux**: Uygulama klasöründe iken standart girişten(klavyeden) algoritmanızı yazıp Ctrl+D tuşuna basarak çalıştırabilirsiniz.
+```sh
+./alg.sh
+```
+**Windows**:
+```
+alg.bat
+```
+- ### Girdi dosyası
+**Linux**:
+```sh
+./alg.sh < ornek1.alg
+```
+**Windows**:
+```
+alg.bat < ornek1.alg
+```
+- ### Applet
+**Linux**:
+```sh
+./aap.sh
+```
+**Windows**:
+```
+aap.bat
+```
+![Applet örneği](algint4a.png)
+
+##Örnek Algoritma
+```
 1. Basla
 2. karetoplam=0
 3. giris:N
@@ -14,3 +53,4 @@ Sample algorithm that runs on interpreter which calculates the sum of squares of
 9. yaz 'Karelerin toplami:'
 10. yaz karetoplam
 11. Dur
+```
