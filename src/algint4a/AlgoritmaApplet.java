@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Þevket
+ * @author Åževket
  */
 
 final class TextAreaOutputStream extends OutputStream {
@@ -97,7 +97,7 @@ public class AlgoritmaApplet extends JApplet {
         sonuc.setForeground(new Color(0, 127, 0));
         sonuc.setFont(f);
         sonuc.setEditable(false);
-        copyright=new JLabel("pcprogramlama.com © 2008 - 2012. Her Hakký Saklýdýr ®");
+        copyright=new JLabel("pcprogramlama.com Â© 2008 - 2012. Her HakkÄ± SaklÄ±dÄ±r Â®");
         JScrollPane pane=new JScrollPane(text);
         JScrollPane pane2=new JScrollPane(sonuc);
         c.add(pane);

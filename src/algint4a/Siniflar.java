@@ -44,10 +44,10 @@ class Giris extends Satir {
         SatirNo=str;
     }
     public int Isle() {
-        /*System.out.print("Bir deðer girin("+DegiskenAdi+"):");
+        /*System.out.print("Bir deÄŸer girin("+DegiskenAdi+"):");
         Scanner s=new Scanner(System.in);
         Algoritma.degerAta(DegiskenAdi, s.nextInt());*/
-        Algoritma.degerAta(DegiskenAdi,Integer.parseInt(JOptionPane.showInputDialog("Bir deðer girin("+DegiskenAdi+"):")));
+        Algoritma.degerAta(DegiskenAdi,Integer.parseInt(JOptionPane.showInputDialog("Bir deÄŸer girin("+DegiskenAdi+"):")));
         return SatirNo+1;
     }
 }
